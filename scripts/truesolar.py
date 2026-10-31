@@ -15,9 +15,9 @@
 
 用法
 ----
-  python truesolar.py --city 北京 --date 1999-11-18 --time 20:00
-  python truesolar.py --lon 116.23 --date 1999-11-18 --time 20:00
-  python truesolar.py --city 乌鲁木齐 --date 1999-11-18 --time 20:00 --json
+  python truesolar.py --city 成都 --date 2000-01-01 --time 12:00
+  python truesolar.py --lon 104.07 --date 2000-01-01 --time 12:00
+  python truesolar.py --city 乌鲁木齐 --date 2000-06-15 --time 12:00 --json
 
 若不给出生城市也不给经度，脚本会报错提示，不要默认按北京时间算。
 """
@@ -164,7 +164,7 @@ def get_next(name: str) -> str:
 
 def main():
     ap = argparse.ArgumentParser(description="真太阳时校正与时辰判定")
-    ap.add_argument("--city", help="出生城市，如 北京 / 昌平 / 乌鲁木齐")
+    ap.add_argument("--city", help="出生城市，如 成都 / 上海 / 乌鲁木齐")
     ap.add_argument("--lon", type=float, help="出生地经度（东经为正），优先于 --city")
     ap.add_argument("--date", required=True, help="公历出生日期 YYYY-MM-DD")
     ap.add_argument("--time", required=True, help="北京时间 HH:MM")
@@ -175,7 +175,7 @@ def main():
         lon, note = resolve_lon(args.city)
         if lon is None:
             print(f"错误：城市「{args.city}」不在内置经度表中，请改用 --lon 直接给出经度。", file=sys.stderr)
-            print("（可在城市经纬度网站查出生地经度；东经为正，如北京昌平 116.23）", file=sys.stderr)
+            print("（可在城市经纬度网站查出生地经度；东经为正，如成都 104.07）", file=sys.stderr)
             sys.exit(1)
     else:
         lon, note = args.lon, "手动指定"

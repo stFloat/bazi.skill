@@ -34,9 +34,9 @@ description: |
 ```bash
 PY="C:/Users/DWHadmin/.workbuddy/binaries/python/envs/py311/Scripts/python.exe"
 SK="C:/Users/DWHadmin/.workbuddy/skills/bazi"
-PYTHONIOENCODING=utf-8 "$PY" "$SK/scripts/truesolar.py" --city 昌平 --date 1999-11-18 --time 20:00
+PYTHONIOENCODING=utf-8 "$PY" "$SK/scripts/truesolar.py" --city 成都 --date 2000-01-01 --time 12:00
 # 城市不在内置表时直接给经度：
-PYTHONIOENCODING=utf-8 "$PY" "$SK/scripts/truesolar.py" --lon 116.23 --date 1999-11-18 --time 20:00
+PYTHONIOENCODING=utf-8 "$PY" "$SK/scripts/truesolar.py" --lon 104.07 --date 2000-01-01 --time 12:00
 ```
 
 输出含：经度差时、均时差、真太阳时、时辰、**距边界余量**、风险等级、可直接复制的排盘参数。
@@ -136,7 +136,7 @@ PYTHONIOENCODING=utf-8 "$PY" "$SK/scripts/bazi.py" -y 1990 -m 1 -d 15 -H 12 -M 0
 1. **去空亡检验**：把结论中所有与空亡相关的句子删掉。若某条结论随之不成立，那条结论**必须推翻重述**——它不是"保守"，是原本就不该写。改写时改用冲、合、透干、旺衰、大运引动作为主据。
 2. **唯一解检验**：应期是否给到"唯某运某年"这种唯一解？若只写"宜晚婚""中年后"，视为**未完成**，必须回到财星（男）/官星（女）到位之年，叠加冲合引动，取最实的那一年。
 
-> 历史教训：本机案例（己卯盘）第二版曾用"申酉空亡"把壬申运判成"杀印双虚"、把 2029 己酉降为"雷声大雨点小"、把婚期推到 33 岁后——**三条都是空亡主断，违反本节规则，已撤回**。详见 `maisui_cases.md`。
+> 历史教训：曾有一个盘的推演把"运支落空"直接读成"整运虚耗"，还据此把婚期推后数年——**三条结论全靠空亡支撑，违反本节规则，已撤回**。详见 `maisui_cases.md` 三·补。
 
 **派别校验层：`references/bazi_method.md`**，用于避免单一视角：
 - **旺衰派**（books.md 二、三、五）：得令/得地/得势 → 日主层级 → 喜用神/忌神 → 调候 → 病药。严禁"缺什么补什么"。

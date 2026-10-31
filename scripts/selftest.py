@@ -92,15 +92,16 @@ check("1980-02-05 00:05 年柱（交节前5分钟）", year_pillar(1980, 2, 5, 0
 check("1980-02-05 00:15 年柱（交节后6分钟）", year_pillar(1980, 2, 5, 0, 15), "庚申")
 
 # ---------------------------------------------------------------- 基准案例
-BASE = bazi.compute(1999, 11, 18, 19, 59, "male")
+# 用构造日期做回归锚点（非任何真实出生信息）：己巳 戊辰 壬寅 甲辰，身弱杀重
+BASE = bazi.compute(1989, 4, 12, 8, 0, "male")
 check("基准案例四柱", BASE["pillars"],
-      {"year": "己卯", "month": "乙亥", "day": "甲戌", "hour": "甲戌"})
-check("基准案例日主", BASE["day_master"], "甲")
-check("基准案例旺衰层级", BASE["strength_eval"]["level"], "偏强")
-check("基准案例空亡", BASE["kongwang"], "申、酉")
-check("基准案例起运", BASE["dayun"]["start_age_value"], 3.54)
-check("基准案例第3运干支", BASE["dayun"]["list"][2]["ganzhi"], "壬申")
-check("基准案例第5运干支", BASE["dayun"]["list"][4]["ganzhi"], "庚午")
+      {"year": "己巳", "month": "戊辰", "day": "壬寅", "hour": "甲辰"})
+check("基准案例日主", BASE["day_master"], "壬")
+check("基准案例旺衰层级", BASE["strength_eval"]["level"], "身弱")
+check("基准案例空亡", BASE["kongwang"], "辰、巳")
+check("基准案例起运", BASE["dayun"]["start_age_value"], 2.4)
+check("基准案例第3运干支", BASE["dayun"]["list"][2]["ganzhi"], "乙丑")
+check("基准案例第5运干支", BASE["dayun"]["list"][4]["ganzhi"], "癸亥")
 
 # ------------------------------------------------- 流年序列（曾错位一年的 bug）
 LN = {x["year"]: x["ganzhi"] for x in bazi.get_liunian(
@@ -123,8 +124,8 @@ _mismatch = [y for y in range(1900, 2101) if gz(y) != _gz_by_cycle(y)]
 check("1900-2100 年干支与六十循环零差异", _mismatch, [])
 
 # ---------------------------------------------------------------- 真太阳时
-lon, _ = truesolar.resolve_lon("昌平")
-check("昌平经度", round(lon, 2), 116.23)
+lon, _ = truesolar.resolve_lon("成都")
+check("成都经度", round(lon, 2), 104.07)
 
 lon_bj, _ = truesolar.resolve_lon("北京")
 check("北京经度", round(lon_bj, 2), 116.41)
@@ -132,15 +133,15 @@ check("北京经度", round(lon_bj, 2), 116.41)
 lon_w, _ = truesolar.resolve_lon("乌鲁木齐")
 check("乌鲁木齐经度", round(lon_w, 2), 87.62)
 
-# 昌平 1999-11-18 20:00 → 19:59:23 戌时，余量 59 分钟（低风险）
-eot = truesolar.eot_minutes(__import__("datetime").date(1999, 11, 18), 20)
-total = (116.23 - 120.0) * 4.0 + eot
-check("昌平该日合计修正（分钟）", round(total, 1), -0.6)
-check("修正后小时", 20 * 60 + round(total), 1199)
+# 成都 2000-01-01 12:00 → 10:53 巳时，余量仅 7 分钟（极高风险，用于验证边界告警）
+eot = truesolar.eot_minutes(__import__("datetime").date(2000, 1, 1), 12)
+total = (104.07 - 120.0) * 4.0 + eot
+check("成都该日合计修正（分钟）", round(total, 1), -66.6)
+check("修正后小时", 12 * 60 + round(total), 653)
 
-sc, margin, _ = truesolar.shichen_of(19, 59)
-check("19:59 时辰", sc, "戌时")
-check("19:59 距边界", round(margin), 59)
+sc, margin, _ = truesolar.shichen_of(10, 53)
+check("10:53 时辰", sc, "巳时")
+check("10:53 距边界", round(margin), 7)
 
 sc2, _, _ = truesolar.shichen_of(23, 30)
 check("23:30 时辰（子时跨日）", sc2, "子时")
